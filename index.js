@@ -4,7 +4,7 @@ const cors = require('cors')
 const app = express();
 require('dotenv').config()
 // port to listen to the response
-const port = process.env.PORT || 5000;
+const port = process.env.port || 5000;
 
 // middleware
 app.use(cors())
@@ -102,8 +102,6 @@ async function run() {
     });
 
 
-
-
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -117,7 +115,7 @@ run().catch(console.dir);
 
 // default route
 app.get('/', (req, res) => {
-  console.log('Toy Marketplace Server is running')
+  res.send('Toy Marketplace Server is running')
 })
 
 // port to listen to the response sent from the sever
