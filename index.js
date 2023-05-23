@@ -77,6 +77,15 @@ async function run() {
       res.send(result)
     })
 
+    // use query parameter to get specified user's all the added toys
+    app.get('/myToys', async (req, res) => {
+      let query = {};
+      if (req.query?.email) {
+        query = { email: req.query.email }
+      }
+      const result = await newToyCollection.find(query)
+      res.send(result)
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
