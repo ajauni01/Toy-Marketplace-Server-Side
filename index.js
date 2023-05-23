@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const express = require('express')
 const cors = require('cors')
 const app = express();
@@ -32,6 +32,7 @@ async function run() {
     const regularToyCollection = client.db("enjoyToy").collection("regularToy")
     const sportsToyCollection = client.db("enjoyToy").collection("sportsToy")
     const policeToyCollection = client.db("enjoyToy").collection("policeToy")
+    const newToyCollection = client.db("enjoyToy").collection("newToy")
 
 
     // get all toy information from the mongoDB database stored under the allToyCars folder.
@@ -58,6 +59,21 @@ async function run() {
     app.get('/policeToy', async (req, res) => {
       const cursor = policeToyCollection.find()
       const result = await cursor.toArray()
+      res.send(result)
+    })
+
+    // get a specific toy info based on id
+    app.get('/viewDetails/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await allToyCollection.findOne(query)
+      res.send(result)
+    })
+
+    // store the client side's new toy information to the mongoDB database
+    app.post('/newToyDetails', async (req, res) => {
+      const newToyInfo = req.body;
+      const result = await newToyCollection.insertOne(newToyInfo)
       res.send(result)
     })
 
