@@ -50,12 +50,12 @@ async function run() {
       res.send(result)
     })
 
-    // // get police toy car information
-    // app.get('/policeToy', async (req, res) => {
-    //   const cursor = allToyCollection.find()
-    //   const result = await cursor.toArray()
-    //   res.send(result)
-    // })
+    // get police toy car information
+    app.get('/policeToy', async (req, res) => {
+      const cursor = allToyCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
 
 
     // Send a ping to confirm a successful connection
