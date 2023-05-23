@@ -29,6 +29,10 @@ async function run() {
 
     // access the stored data in the mongoDB database
     const allToyCollection = client.db("enjoyToy").collection("allToyCars")
+    const regularToyCollection = client.db("enjoyToy").collection("regularToy")
+    const sportsToyCollection = client.db("enjoyToy").collection("sportsToy")
+    const policeToyCollection = client.db("enjoyToy").collection("policeToy")
+
 
     // get all toy information from the mongoDB database stored under the allToyCars folder.
     app.get('/allToyCars', async (req, res) => {
@@ -39,20 +43,20 @@ async function run() {
 
     // get regular toy car information
     app.get('/regularToy', async (req, res) => {
-      const cursor = allToyCollection.find()
+      const cursor = regularToyCollection.find()
       const result = await cursor.toArray()
       res.send(result)
     })
     // get sports toy car information
     app.get('/sportsToy', async (req, res) => {
-      const cursor = allToyCollection.find()
+      const cursor = sportsToyCollection.find()
       const result = await cursor.toArray()
       res.send(result)
     })
 
     // get police toy car information
     app.get('/policeToy', async (req, res) => {
-      const cursor = allToyCollection.find()
+      const cursor = policeToyCollection.find()
       const result = await cursor.toArray()
       res.send(result)
     })
