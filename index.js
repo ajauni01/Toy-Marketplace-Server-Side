@@ -10,10 +10,6 @@ const port = process.env.PORT || 5000;
 app.use(cors())
 app.use(express.json())
 
-// check the hidden database credentials
-// console.log(process.env.DB_USER)
-// console.log(process.env.DB_PASS)
-
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.3vaow4q.mongodb.net/?retryWrites=true&w=majority`;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -29,6 +25,38 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+
+    // access the stored data in the mongoDB database
+    const allToyCollection = client.db("enjoyToy").collection("allToyCars")
+
+    // get all toy information from the mongoDB database stored under the allToyCars folder.
+    app.get('/allToyCars', async (req, res) => {
+      const cursor = allToyCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+
+    // get regular toy car information
+    app.get('/regularToy', async (req, res) => {
+      const cursor = allToyCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+    // // get sports toy car information
+    // app.get('/sportsToy', async (req, res) => {
+    //   const cursor = allToyCollection.find()
+    //   const result = await cursor.toArray()
+    //   res.send(result)
+    // })
+    // // get police toy car information
+    // app.get('/policeToy', async (req, res) => {
+    //   const cursor = allToyCollection.find()
+    //   const result = await cursor.toArray()
+    //   res.send(result)
+    // })
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
