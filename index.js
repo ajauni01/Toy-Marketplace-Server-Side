@@ -43,12 +43,13 @@ async function run() {
       const result = await cursor.toArray()
       res.send(result)
     })
-    // // get sports toy car information
-    // app.get('/sportsToy', async (req, res) => {
-    //   const cursor = allToyCollection.find()
-    //   const result = await cursor.toArray()
-    //   res.send(result)
-    // })
+    // get sports toy car information
+    app.get('/sportsToy', async (req, res) => {
+      const cursor = allToyCollection.find()
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+
     // // get police toy car information
     // app.get('/policeToy', async (req, res) => {
     //   const cursor = allToyCollection.find()
