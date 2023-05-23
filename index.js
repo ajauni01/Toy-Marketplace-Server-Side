@@ -81,11 +81,28 @@ async function run() {
     app.get('/myToys', async (req, res) => {
       let query = {};
       if (req.query?.email) {
-        query = { email: req.query.email }
+        query = { sellerEmail: req.query.email }
       }
-      const result = await newToyCollection.find(query)
+      const result = newToyCollection.find(query);
+      console.log('Server Hit')
       res.send(result)
     })
+
+    // find all the toys added by all users
+    app.get('/allToys', async (req, res) => {
+      try {
+        const cursor = newToyCollection.find();
+        const result = await cursor.toArray();
+        console.log('Server Hit');
+        res.send(result);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+      }
+    });
+
+
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
